@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SiswaRequest;
-use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\MuridRequest;
 use App\Models\Magang;
 use App\Models\Murid;
@@ -13,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 use Session;
 use ErrorException;
 use Hash;
-use DB;
 
 class MuridController extends Controller
 {
@@ -63,6 +61,8 @@ class MuridController extends Controller
     }
     public function pendaftaran(MuridRequest $request)
     {
+        try {
+            // Buat dan simpan data user
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
@@ -70,20 +70,26 @@ class MuridController extends Controller
             $user->role = 'siswa';
             $user->save();
 
+            // Buat dan simpan data murid
             $murid = new Murid();
-            $murid->id = $user->id;
+            $murid->id = $user->id;  // Asosiasi dengan ID user
             $murid->nama = $user->name;
             $murid->nis = $request->nis;
             $murid->jurusan = $request->jurusan;
             $murid->kelas = $request->kelas;
             $murid->save();
 
-            // Tampilkan SweetAlert dengan informasi termasuk custom ID
-            Alert::success('Pendaftaran Berhasil', 'Selamat Pendaftaran Anda Berhasil. Nomor pendaftaran Anda: ' . $murid->id);
-
-            // Redirect or return view
+            // Set pesan sukses dan arahkan ke halaman murid.index
+            Session::flash('success', 'Selamat Pendaftaran Anda Berhasil! Silahkan Login dan Pantau Dashboard Secara Berkala');
+            dd(Session::get('success'));
             return redirect()->route('login');
+
+        } catch (\Exception $e) {
+            // Tangani kesalahan dan kembalikan pesan kesalahan
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
+
 
 
     /**

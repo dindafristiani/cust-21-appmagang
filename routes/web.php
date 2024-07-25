@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
         Route::get('informasi-magang', [MuridController::class, 'infoMagangSiswa'])->name('infoMagang.siswa');
     });
 });
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/pendaftaran', [MuridController::class, 'daftar'])->name('murid.pendaftaran');
 Route::post('/daftar', [MuridController::class, 'pendaftaran'])->name('daftar.murid');

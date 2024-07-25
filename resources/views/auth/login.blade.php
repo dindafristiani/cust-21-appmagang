@@ -190,7 +190,7 @@
                 <button type="submit" class="login-button">Login <i class="fas fa-arrow-right"></i></button>
             </form>
             <div class="sign-up">
-                Don't have an account yet? <a href="{{ route('register') }}">Sign up</a>
+                Don't have an account yet? <a href="{{ route('murid.pendaftaran') }}">Sign up</a>
             </div>
         </div>
     <!-- </div>
