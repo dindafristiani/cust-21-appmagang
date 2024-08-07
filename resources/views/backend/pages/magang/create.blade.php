@@ -35,6 +35,20 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
+                                        <label for="basicInput">Nama Siswa</label> <span class="text-danger">*</span>
+                                        <select class="form-control @error('id_siswa') is-invalid @enderror" name="id_siswa" style="width: 100%;" id="js-example-basic-single2">
+                                            <option value="">Pilih Nama Siswa</option>
+                                            <!-- Tambahkan opsi-opsi select di sini -->
+                                        </select>
+                                        @error('id_siswa')
+                                            <div class="invalid-feedback">
+                                                <strong>{{ $message }}</strong>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
                                         <label for="basicInput">Nama Mitra</label> <span class="text-danger">*</span>
                                         <select class="form-control @error('id_mitra') is-invalid @enderror" name="id_mitra" style="width: 100%;" id="js-example-basic-single">
                                             <option value="">Pilih Mitra Magang</option>
@@ -77,22 +91,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="basicInput">Nama Siswa</label> <span class="text-danger">*</span>
-                                        <select class="form-control @error('id_siswa') is-invalid @enderror" name="id_siswa[]" style="width: 100%;" id="js-example-basic-single2" multiple="multiple">
-                                            <option value="">Pilih Nama Siswa</option>
-                                            <!-- Tambahkan opsi-opsi select di sini -->
-                                        </select>
-                                        @error('id_siswa')
-                                            <div class="invalid-feedback">
-                                                <strong>{{ $message }}</strong>
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                
+                                </div>                                
                             </div>
                         <button type="submit" class="btn btn-primary">Tambahkan</button>
                     </form>
@@ -108,12 +107,79 @@
 
 <script>
     $(document).ready(function() {
-        $('#js-example-basic-single').select2({
+    // Initialize the siswa select2 with old value
+    $('#js-example-basic-single2').select2({
+        placeholder: 'Pilih Nama Siswa',
+        ajax: {
+            url: '{{ route("get-siswa") }}',
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    q: params.term // search term
+                };
+            },
+            processResults: function(data) {
+                return {
+                    results: $.map(data, function(item) {
+                        return {
+                            id: item.id,
+                            text: item.nama,
+                            jurusan: item.jurusan // Assuming the jurusan is part of the item data
+                        }
+                    })
+                };
+            },
+            cache: true
+        }
+    }).val('{{ old("siswa") }}').trigger('change'); // Set the old value
+
+    // Initialize the mitra select2 with empty options initially
+    $('#js-example-basic-single').select2({
+        placeholder: 'Pilih Mitra Magang',
+        ajax: {
+            url: '{{ route("get-mitra") }}',
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                var selectedSiswaJurusan = $('#js-example-basic-single2').select2('data').length ? $('#js-example-basic-single2').select2('data')[0].jurusan : null;
+                return {
+                    q: params.term, // search term
+                    jurusan: selectedSiswaJurusan // filter by jurusan
+                };
+            },
+            processResults: function(data) {
+                return {
+                    results: $.map(data, function(item) {
+                        return {
+                            id: item.id,
+                            text: item.nama
+                        }
+                    })
+                };
+            },
+            cache: true
+        }
+    });
+
+    // Listen for changes on the siswa select2
+    $('#js-example-basic-single2').on('select2:select', function(e) {
+        var selectedSiswa = e.params.data;
+        var jurusan = selectedSiswa.jurusan;
+
+        // Update the mitra select2 based on the selected siswa's jurusan
+        $('#js-example-basic-single').select2('destroy').select2({
             placeholder: 'Pilih Mitra Magang',
             ajax: {
                 url: '{{ route("get-mitra") }}',
                 dataType: 'json',
                 delay: 250,
+                data: function(params) {
+                    return {
+                        q: params.term, // search term
+                        jurusan: jurusan // filter by jurusan
+                    };
+                },
                 processResults: function(data) {
                     return {
                         results: $.map(data, function(item) {
@@ -126,31 +192,16 @@
                 },
                 cache: true
             }
-        });
+        }).val(null).trigger('change'); // Clear previous selections
     });
-</script>
-<script>
-    $(document).ready(function() {
-        $('#js-example-basic-single2').select2({
-            placeholder: 'Pilih Nama Siswa',
-            ajax: {
-                url: '{{ route("get-siswa") }}',
-                dataType: 'json',
-                delay: 250,
-                processResults: function(data) {
-                    return {
-                        results: $.map(data, function(item) {
-                            return {
-                                id: item.id,
-                                text: item.nama
-                            }
-                        })
-                    };
-                },
-                cache: true
-            }
-        });
-    });
+
+    // If there is an old value for mitra, set it
+    if ('{{ old("mitra") }}') {
+        $('#js-example-basic-single').append(new Option('{{ old("mitra_text") }}', '{{ old("mitra") }}', true, true)).trigger('change');
+    }
+});
+
+
 </script>
 
 @endpush

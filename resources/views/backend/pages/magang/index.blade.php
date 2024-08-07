@@ -47,33 +47,52 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama</th>
-                            <th>Alamat</th>
-                            <th>PIC</th>
-                            <th>Jumlah Siswa Magang</th>
+                            <th>Nama Siswa</th>
+                            <th>NIS</th>
+                            <th>Jurusan</th>
+                            <th>Lokasi Magang</th>
+                            <th>Guru Pendamping</th>
+                            <th>Periode Awal</th>
+                            <th>Periode Akhir</th>
+                            <th>Keterangan</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($mitra as $key => $mitras)
+                        @foreach ($magang as $key => $magangs)
                         <tr>
                             <td> {{$key+1}} </td>
-                            <td> {{$mitras->nama}} </td>
-                            <td> {{$mitras->alamat}} </td>
-                            <td> {{$mitras->pic}} </td>
-                            <td> {{$mitras->magangs_count}} </td>
+                            <td> {{$magangs->murid->nama}} </td>
+                            <td> {{$magangs->murid->nis}} </td>
+                            <td> {{$magangs->murid->jurusan}} </td>
+                            <td> {{$magangs->mitra->nama}} </td>
+                            <td> {{$magangs->mitra->pic}} </td>
+                            <td> {{$magangs->periode_awal}} </td>
+                            <td> {{$magangs->periode_akhir}} </td>
+                            <td> {{$magangs->keterangan}} </td>
+                            <td>
+                                @if ($magangs->is_active == 1)
+                                    <button class="btn btn-sm btn-success">aktif</button>
+                                @else
+                                    <button class="btn btn-sm btn-secondary">selesai</button>
+                                @endif
+                            </td>
+
                             <td>
                                 <div style="width:100px">
-                                    <a href="{{ route('mitra.edit', $mitras->id) }}" class="btn">
+                                    <a href="{{ route('magang.edit', $magangs->id) }}" class="btn">
                                         <button class="badge bg-warning border-0">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                     </a>
-                                    <a href="{{ route('magang.create-from-mitra', $mitras->id) }}" class="btn">
-                                        <button class="badge bg-blue border-0">
-                                            <i class="fas fa-plus"></i>
+                                    <form action="{{ route ('magang.destroy', $magangs->id) }}" method="post" class="d-inline">
+                                        @method('delete')
+                                        @csrf
+                                        <button type="submit" class="badge bg-danger border-0" onclick="return confirm('Apakah Kamu Ingin Menghapus Ini?')">
+                                            <i class="fas fa-trash align-items-center"></i>
                                         </button>
-                                    </a>
+                                    </form>
                                 </div>
                             </td>
                         </tr>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMitraTable extends Migration
+class CreateLogbookTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,8 @@ class CreateMitraTable extends Migration
      */
     public function up()
     {
-        Schema::create('mitra', function (Blueprint $table) {
+        Schema::create('logbook', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('alamat');
-            $table->string('pic');
-            $table->string('nohp');
-            $table->string('id_guru');
-            $table->string('jurusan');
             $table->timestamps();
         });
     }
@@ -32,6 +26,6 @@ class CreateMitraTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mitra');
+        Schema::dropIfExists('logbook');
     }
 }

@@ -52,6 +52,7 @@
                             <th>PIC</th>
                             <th>No Hp</th>
                             <th>Guru Pendamping</th>
+                            <th>Jurusan</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -64,6 +65,7 @@
                             <td> {{$mitras->pic}} </td>
                             <td> {{$mitras->nohp}} </td>
                             <td> {{$mitras->guru->nama}} </td>
+                            <td> {{$mitras->jurusan}} </td>
                             <td>
                                 <div style="width:100px">
                                     <a href="{{ route('mitra.edit', $mitras->id) }}" class="btn">

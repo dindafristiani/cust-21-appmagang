@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/get-siswa', [MagangController::class, 'getSiswa'])->name('get-siswa');
         Route::get('magang/create-from-mitra/{id?}', [MagangController::class, 'createFromMitra'])->name('magang.create-from-mitra');
         Route::get('kurangi-kuota', [MagangController::class, 'kurangiKuota'])->name('kurangi.kuota');
+        Route::get('laporan/magang/{id?}', [MagangController::class, 'show'])->name('laporan.show');
     });
 });
 Route::middleware('auth')->group(function () {

@@ -69,12 +69,24 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="basicInput">Jurusan</label> <span class="text-danger">*</span>
+                                        <label for="jurusan">Jurusan</label> <span class="text-danger">*</span>
                                         <select class="form-select @error('jurusan') is-invalid @enderror" name="jurusan">
-                                            <option value="">--Pilih Jurusan--</option>
-                                            <option value="IPA" {{ (old('jurusan') ?? $murid->jurusan) == 'IPA' ? 'selected' : '' }}>IPA</option>
-                                            <option value="IPS" {{ (old('jurusan') ?? $murid->jurusan) == 'IPS' ? 'selected' : '' }}>IPS</option>
+                                            <option value="">Pilih Jurusan</option>
+                                            <option value="TITL" {{ (old('jurusan') ?? $murid->jurusan) == 'TITL' ? 'selected' : '' }}>TITL</option>
+                                            <option value="TP" {{ (old('jurusan') ?? $murid->jurusan) == 'TP' ? 'selected' : '' }}>TP</option>
+                                            <option value="TPL" {{ (old('jurusan') ?? $murid->jurusan) == 'TPL' ? 'selected' : '' }}>TPL</option>
+                                            <option value="TKR" {{ (old('jurusan') ?? $murid->jurusan) == 'TKR' ? 'selected' : '' }}>TKR</option>
+                                            <option value="TSM" {{ (old('jurusan') ?? $murid->jurusan) == 'TSM' ? 'selected' : '' }}>TSM</option>
+                                            <option value="TBSM" {{ (old('jurusan') ?? $murid->jurusan) == 'TBSM' ? 'selected' : '' }}>TBSM</option>
+                                            <option value="TKRO" {{ (old('jurusan') ?? $murid->jurusan) == 'TKRO' ? 'selected' : '' }}>TKRO</option>
+                                            <option value="TPM" {{ (old('jurusan') ?? $murid->jurusan) == 'TPM' ? 'selected' : '' }}>TPM</option>
+                                            <option value="TIPTL" {{ (old('jurusan') ?? $murid->jurusan) == 'TIPTL' ? 'selected' : '' }}>TIPTL</option>
                                         </select>
+                                        @error('jurusan')
+                                            <div class="invalid-feedback">
+                                                <strong>{{ $message }}</strong>
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-12">

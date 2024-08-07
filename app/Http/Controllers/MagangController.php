@@ -23,7 +23,7 @@ class MagangController extends Controller
     {
         $magang = Magang::all();
         $murid = Murid::all();
-        $mitra = Mitra::all();
+        $mitra = Mitra::withCount('magangs')->get();
         return view('backend.pages.magang.laporan', compact('magang','murid','mitra'));
     }
 
@@ -41,19 +41,17 @@ class MagangController extends Controller
                 'id_mitra' => 'required|exists:mitra,id',
                 'periode_awal' => 'required|date',
                 'periode_akhir' => 'required|date|after_or_equal:periode_awal',
-                'id_siswa' => 'required|array',
+                'id_siswa' => 'required',
                 'id_siswa.*' => 'exists:murids,id',
             ]);
                 
-            foreach ($request->id_siswa as $id_siswa) {
                 Magang::create([
                     'id_mitra' => $request->id_mitra,
-                    'id_siswa' => $id_siswa,
+                    'id_siswa' => $request->id_siswa,
                     'periode_awal' => $request->periode_awal,
                     'periode_akhir' => $request->periode_akhir,
                     'is_active'=> '1',
                 ]);
-            }
     
             return redirect()->route('magang.index')->with('success', 'Data magang berhasil disimpan.');
 
@@ -70,7 +68,8 @@ class MagangController extends Controller
      */
     public function show($id)
     {
-        //
+        $mitra = Mitra::with(['magangs.murid'])->findOrFail($id);
+        return view('backend.pages.magang.show', compact('mitra'));
     }
 
     /**
@@ -82,8 +81,9 @@ class MagangController extends Controller
     public function edit($id)
     {
         $magang = magang::find($id);
-        $murid = murid::all();
-        return view('backend.pages.magang.edit', compact('magang','murid'));
+        $siswa= murid::all();
+        $mitra = Mitra::all();
+        return view('backend.pages.magang.edit', compact('magang','siswa','mitra'));
     }
 
     /**
@@ -102,7 +102,7 @@ class MagangController extends Controller
             $magang->id_siswa            = $request->id_siswa;
             $magang->periode_awal        = $request->periode_awal;
             $magang->periode_akhir       = $request->periode_akhir;
-            $magang->is_active           = $request->is_active;
+            $magang->is_active           = 1;
             $magang->keterangan          = $request->keterangan;
             // Save the updated record
             $magang->update();
@@ -129,9 +129,9 @@ class MagangController extends Controller
             // Delete record from the database
             $magang->delete();
 
-            return redirect()->route('data-magang')->with('success', 'Data Magang Berhasil Dihapus!');
+            return redirect()->route('magang.index')->with('success', 'Data Magang Berhasil Dihapus!');
         } catch (Exception $e) {
-            return redirect()->route('data-magang')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            return redirect()->route('magang.index')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 
@@ -144,13 +144,30 @@ class MagangController extends Controller
 
     public function getMitra(Request $request)
     {
-        $mitra = Mitra::where('nama', 'like', '%'.request('q').'%')->get();
+        $jurusan = $request->input('jurusan');
+        $query = $request->input('q');
+
+        $mitra = Mitra::when($jurusan, function ($query, $jurusan) {
+            return $query->where('jurusan', $jurusan);
+        })->when($query, function ($query, $search) {
+            return $query->where('nama', 'like', '%' . $search . '%');
+        })->get();
 
         return response()->json($mitra);
     }
     public function getSiswa(Request $request)
     {
-        $siswa = Murid::where('nama', 'like', '%'.request('q').'%')->get();
+        $searchQuery = $request->input('q'); // Parameter pencarian nama
+
+        // Mendapatkan data murid yang memiliki status magang tidak aktif atau tidak ada di tabel magang
+        $siswa = Murid::whereDoesntHave('magang')
+            ->orWhereHas('magang', function ($query) {
+                $query->where('is_active', 0); // Pastikan field is_active di tabel magang bernilai 0
+            })
+            ->when($searchQuery, function ($query, $search) {
+                return $query->where('nama', 'like', '%' . $search . '%');
+            })
+            ->get();
 
         return response()->json($siswa);
     }

@@ -81,7 +81,6 @@ class MuridController extends Controller
 
             // Set pesan sukses dan arahkan ke halaman murid.index
             Session::flash('success', 'Selamat Pendaftaran Anda Berhasil! Silahkan Login dan Pantau Dashboard Secara Berkala');
-            dd(Session::get('success'));
             return redirect()->route('login');
 
         } catch (\Exception $e) {

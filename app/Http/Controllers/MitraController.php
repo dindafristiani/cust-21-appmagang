@@ -33,6 +33,7 @@ class MitraController extends Controller
             $mitra->pic             = $request->pic;
             $mitra->nohp            = $request->nohp;
             $mitra->id_guru         = $request->id_guru;
+            $mitra->jurusan         = $request->jurusan;
             $mitra->save();
 
             Session::flash('success','Data Mitra Berhasil Ditambah !');
@@ -84,6 +85,7 @@ class MitraController extends Controller
             $mitra->pic             = $request->pic;
             $mitra->nohp            = $request->nohp;
             $mitra->id_guru         = $request->id_guru;
+            $mitra->jurusan         = $request->jurusan;
             // Save the updated record
             $mitra->update();
 

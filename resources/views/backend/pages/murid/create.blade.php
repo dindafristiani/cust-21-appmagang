@@ -84,11 +84,18 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="basicInput">Jurusan</label> <span class="text-danger">*</span>
-                                        <select class="form-select @error('jurusan') is-invalid @enderror" name="jurusan">
-                                            <option value="">--Pilih Jurusan--</option>
-                                            <option value="IPA" {{ old('jurusan') == 'IPA' ? 'selected' : '' }}>IPA</option>
-                                            <option value="IPS" {{ old('jurusan') == 'IPS' ? 'selected' : '' }}>IPS</option>
+                                        <label for="jurusan">Jurusan</label> <span class="text-danger">*</span>
+                                        <select class="form-control @error('jurusan') is-invalid @enderror" name="jurusan">
+                                            <option value="">Pilih Jurusan</option>
+                                            <option value="TITL" {{ old('jurusan') == 'TITL' ? 'selected' : '' }}>TITL</option>
+                                            <option value="TP" {{ old('jurusan') == 'TP' ? 'selected' : '' }}>TP</option>
+                                            <option value="TPL" {{ old('jurusan') == 'TPL' ? 'selected' : '' }}>TPL</option>
+                                            <option value="TKR" {{ old('jurusan') == 'TKR' ? 'selected' : '' }}>TKR</option>
+                                            <option value="TSM" {{ old('jurusan') == 'TSM' ? 'selected' : '' }}>TSM</option>
+                                            <option value="TBSM" {{ old('jurusan') == 'TBSM' ? 'selected' : '' }}>TBSM</option>
+                                            <option value="TKRO" {{ old('jurusan') == 'TKRO' ? 'selected' : '' }}>TKRO</option>
+                                            <option value="TPM" {{ old('jurusan') == 'TPM' ? 'selected' : '' }}>TPM</option>
+                                            <option value="TIPTL" {{ old('jurusan') == 'TIPTL' ? 'selected' : '' }}>TIPTL</option>
                                         </select>
                                         @error('jurusan')
                                             <div class="invalid-feedback">

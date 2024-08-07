@@ -28,6 +28,6 @@ class Magang extends Model
 
     public function murid()
     {
-        return $this->belongsTo(Murid::class, 'id_siswa', 'id');
+        return $this->belongsTo(Murid::class, 'id_siswa','id');
     }
 }
