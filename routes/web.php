@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GuruController;
+use App\Http\Controllers\LogbookController;
 use App\Http\Controllers\MagangController;
 use App\Http\Controllers\MitraController;
 use App\Http\Controllers\MuridController;
@@ -41,6 +42,17 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::prefix('dashboard')->middleware('role:siswa')->group( function (){
         Route::get('informasi-magang', [MuridController::class, 'infoMagangSiswa'])->name('infoMagang.siswa');
+        Route::resource('logbook-siswa', LogbookController::class);
+        Route::post('/create-logbook-mingguan', [LogbookController::class, 'createWeeklyLogbooks'])->name('create-logbook');
+        Route::put('/logbook-siswa/update/{id}', [LogbookController::class, 'update'])->name('logbook-siswa.update');
+    });
+});
+
+Route::middleware('auth')->group(function () {
+    Route::prefix('dashboard')->middleware('role:mitra')->group( function (){
+        Route::get('informasi/data-siswa', [MagangController::class, 'dataMagangSiswa'])->name('dataSiswaMagang.index');
+        Route::get('logbook/siswa/show/{id}', [LogbookController::class, 'showLogbookSiswa'])->name('showLogbook.siswa');
+        Route::put('penilaian/{id}', [MagangController::class, 'penilaianSiswa'])->name('penilaian.siswa');
     });
 });
 

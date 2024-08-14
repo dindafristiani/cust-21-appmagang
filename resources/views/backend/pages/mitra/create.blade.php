@@ -36,8 +36,19 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="basicInput">Nama Mitra</label> <span class="text-danger">*</span>
-                                        <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" placeholder="Nama Mitra" />
-                                        @error('nama')
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Nama Mitra" />
+                                        @error('name')
+                                            <div class="invalid-feedback">
+                                            <strong>{{ $message }}</strong>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="basicInput">Email</label> <span class="text-danger">*</span>
+                                        <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="Masukkan Email" />
+                                        @error('email')
                                             <div class="invalid-feedback">
                                             <strong>{{ $message }}</strong>
                                             </div>
@@ -57,9 +68,9 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="basicInput">PIC</label> <span class="text-danger">*</span>
-                                        <input type="text" class="form-control @error('pic') is-invalid @enderror" name="pic" placeholder="Nama PIC" />
-                                        @error('pic')
+                                        <label for="basicInput">No Handphone</label> <span class="text-danger">*</span>
+                                        <input type="text" class="form-control @error('nohp') is-invalid @enderror" name="nohp" placeholder="628086xxxxx" />
+                                        @error('nohp')
                                             <div class="invalid-feedback">
                                                 <strong>{{ $message }}</strong>
                                             </div>
@@ -68,9 +79,9 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="basicInput">No Handphone</label> <span class="text-danger">*</span>
-                                        <input type="text" class="form-control @error('nohp') is-invalid @enderror" name="nohp" placeholder="628086xxxxx" />
-                                        @error('nohp')
+                                        <label for="basicInput">Pembimbing Lapangan</label> <span class="text-danger">*</span>
+                                        <input type="text" class="form-control @error('pic') is-invalid @enderror" name="pic" placeholder="Nama Pembimbing Lapangan" />
+                                        @error('pic')
                                             <div class="invalid-feedback">
                                                 <strong>{{ $message }}</strong>
                                             </div>
@@ -99,25 +110,14 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="form-group">
                                         <label for="basicInput">Guru Pendamping</label> <span class="text-danger">*</span>
                                         <select class="form-control @error('id_guru') is-invalid @enderror" name="id_guru" style="width: 100%;" id="js-example-basic-single">
                                             <option value="">Pilih Guru Pendamping</option>
-                                            <!-- Tambahkan opsi-opsi select di sini -->
+                                             Tambahkan opsi-opsi select di sini 
                                         </select>
                                         @error('id_guru')
-                                            <div class="invalid-feedback">
-                                                <strong>{{ $message }}</strong>
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <!-- <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="basicInput">Kuota</label> <span class="text-danger">*</span>
-                                        <input type="number" class="form-control @error('kuota') is-invalid @enderror" name="kuota" placeholder="Jumlah Kuota" />
-                                        @error('kuota')
                                             <div class="invalid-feedback">
                                                 <strong>{{ $message }}</strong>
                                             </div>

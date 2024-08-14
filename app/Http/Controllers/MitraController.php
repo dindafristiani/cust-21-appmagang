@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MitraRequest;
 use App\Models\Guru;
 use App\Models\Mitra;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Session;
 use ErrorException;
+use Hash;
 
 class MitraController extends Controller
 {
@@ -27,14 +29,25 @@ class MitraController extends Controller
     public function store(MitraRequest $request)
     {
         try {
+
+            $user = new User();
+            $user->name     = $request->name;
+            $user->email    = $request->email;
+            $user->password = Hash::make('12345678'); // Enkripsi password
+            $user->role     = 'mitra';
+            $user->save(); // Simpan user
+    
+            // Pastikan user berhasil disimpan sebelum melanjutkan
+            if ($user) {
             $mitra = new Mitra;
-            $mitra->nama            = $request->nama;
+            $mitra->id              = $user->id;
+            $mitra->nama            = $user->name;
             $mitra->alamat          = $request->alamat;
             $mitra->pic             = $request->pic;
             $mitra->nohp            = $request->nohp;
-            $mitra->id_guru         = $request->id_guru;
             $mitra->jurusan         = $request->jurusan;
             $mitra->save();
+            }
 
             Session::flash('success','Data Mitra Berhasil Ditambah !');
             return redirect()->route('mitra.index');
@@ -84,7 +97,6 @@ class MitraController extends Controller
             $mitra->alamat          = $request->alamat;
             $mitra->pic             = $request->pic;
             $mitra->nohp            = $request->nohp;
-            $mitra->id_guru         = $request->id_guru;
             $mitra->jurusan         = $request->jurusan;
             // Save the updated record
             $mitra->update();

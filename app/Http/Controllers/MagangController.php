@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MagangRequest;
+use App\Models\Logbook;
 use App\Models\Magang;
 use App\Models\Mitra;
 use App\Models\Murid;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use ErrorException;
 
@@ -45,13 +47,13 @@ class MagangController extends Controller
                 'id_siswa.*' => 'exists:murids,id',
             ]);
                 
-                Magang::create([
-                    'id_mitra' => $request->id_mitra,
-                    'id_siswa' => $request->id_siswa,
-                    'periode_awal' => $request->periode_awal,
-                    'periode_akhir' => $request->periode_akhir,
-                    'is_active'=> '1',
-                ]);
+                $magang = new Magang();
+                $magang->id_mitra = $request->id_mitra;
+                $magang->id_siswa = $request->id_siswa;
+                $magang->periode_awal = $request->periode_awal;
+                $magang->periode_akhir = $request->periode_akhir;
+                $magang->is_active= '1';
+                $magang->save();
     
             return redirect()->route('magang.index')->with('success', 'Data magang berhasil disimpan.');
 
@@ -199,5 +201,27 @@ class MagangController extends Controller
             }
         }
         return view('backend.pages.magang.create', compact('mitra'));
+    }
+
+    public function dataMagangSiswa()
+    {
+        $id_mitra = Auth::id();
+        $magangs = Magang::where('id_mitra', $id_mitra)->get();
+        return view('backend.pages.magang.datamagang', compact('magangs'));
+    }
+    public function penilaianSiswa(Request $request, $id)
+    {
+        try {
+            $magang = magang::find($id);
+            // Update other attributes
+            $magang->nilai            = $request->nilai;
+            $magang->keterangan       = $request->keterangan;
+            $magang->update();
+
+            Session::flash('success', 'Penilaian Berhasil! Terima kasih');
+            return redirect()->route('dataSiswaMagang.index');
+        } catch (Exception $e) {
+            return redirect()->route('magang.index')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 }

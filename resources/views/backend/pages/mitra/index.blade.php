@@ -48,10 +48,10 @@
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
+                            <th>Email Perusahaan</th>
                             <th>Alamat</th>
-                            <th>PIC</th>
                             <th>No Hp</th>
-                            <th>Guru Pendamping</th>
+                            <th>Pembimbing Lapangan</th>
                             <th>Jurusan</th>
                             <th>Action</th>
                         </tr>
@@ -61,10 +61,10 @@
                         <tr>
                             <td> {{$key+1}} </td>
                             <td> {{$mitras->nama}} </td>
+                            <td> {{$mitras->user->email}} </td>
                             <td> {{$mitras->alamat}} </td>
                             <td> {{$mitras->pic}} </td>
                             <td> {{$mitras->nohp}} </td>
-                            <td> {{$mitras->guru->nama}} </td>
                             <td> {{$mitras->jurusan}} </td>
                             <td>
                                 <div style="width:100px">

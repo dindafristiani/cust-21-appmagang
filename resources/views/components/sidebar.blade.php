@@ -23,12 +23,12 @@
                     </a>
                 <ul class="nav nav-treeview">
                     <!-- Add your submenu items here -->
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a href="{{route('guru.index')}}" class="nav-link {{ request()->is('dashboard/guru*') ? 'active' : ''}}">
                             <i class="fas fa-chalkboard-teacher nav-icon"></i>
                             <p>Data Guru</p>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a href="{{route('murid.index')}}" class="nav-link {{ request()->is('dashboard/murid*') ? 'active' : ''}}">
                             <i class="fas fa-user-graduate nav-icon"></i>
@@ -72,12 +72,24 @@
             </li>
             @elseif (Auth::user()->role == 'siswa')
             <li class="nav-item ">
-                <a href="{{route('infoMagang.siswa')}}" class="nav-link {{ request()->is('dashboard/magang') ? 'active' : ''}}">
+                <a href="{{route('infoMagang.siswa')}}" class="nav-link {{ request()->is('dashboard/informasi-magang') ? 'active' : ''}}">
                     <i class="nav-icon fas fa-briefcase"></i>
                     <p>Informasi Magang</p>
                 </a>
             </li>
-            
+            <li class="nav-item ">
+                <a href="{{route('logbook-siswa.index')}}" class="nav-link {{ request()->is('dashboard/logbook-siswa') ? 'active' : ''}}">
+                    <i class="nav-icon fas fa-book"></i>
+                    <p>Logbook</p>
+                </a>
+            </li>
+            @elseif (Auth::user()->role == 'mitra')
+            <li class="nav-item ">
+                <a href="{{route('dataSiswaMagang.index')}}" class="nav-link {{ request()->is('dashboard/informasi/data-siswa','dashboard/logbook/siswa/show*') ? 'active' : ''}}">
+                    <i class="nav-icon fas fa-briefcase"></i>
+                    <p>Data Siswa Magang</p>
+                </a>
+            </li>
             @endif
         </ul>
     </nav>

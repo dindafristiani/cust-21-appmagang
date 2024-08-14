@@ -100,7 +100,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="form-group">
                                     <label for="basicInput">Guru Pendamping</label> <span class="text-danger">*</span>
                                         <select class="form-control @error('id_guru') is-invalid @enderror" name="id_guru" style="width: 100%;" id="js-example-basic-single">
@@ -117,7 +117,7 @@
                                             </div>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- <div class="col-12">
                                     <div class="form-group">
                                         <label for="basicInput">Kuota</label> <span class="text-danger">*</span>

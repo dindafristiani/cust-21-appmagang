@@ -42,6 +42,7 @@
             <div class="card-body">
                 
                 <div class="row">
+                    
                     <div class="col-12">
                         <table class="table table-borderless">
                             <tbody>
@@ -62,10 +63,6 @@
                                     <td>: {{ $mitra->nohp }}</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>Guru</strong></td>
-                                    <td>: {{ $mitra->guru->nama }}</td>
-                                </tr>
-                                <tr>
                                     <td><strong>Jurusan</strong></td>
                                     <td>: {{ $mitra->jurusan }}</td>
                                 </tr>
@@ -76,6 +73,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>Nama Siswa</th>
                                     <th>NIS</th>
                                     <th>Kelas</th>
@@ -86,8 +84,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($mitra->magangs as $magang)
+                                @foreach($mitra->magangs as $key => $magang)
                                     <tr>
+                                        <td>{{ $key+1}}</td>
                                         <td>{{ $magang->murid->nama }}</td>
                                         <td>{{ $magang->murid->nis }}</td>
                                         <td>{{ $magang->murid->kelas }}</td>

@@ -174,7 +174,7 @@ class MuridController extends Controller
         $siswa_id = Auth::id();
         $magangs = Magang::with(['mitra.guru', 'murid'])
                          ->where('id_siswa', $siswa_id)
-                         ->get();
+                         ->first();
         return view('backend.pages.murid.informasi', compact('magangs'));
     }
 }

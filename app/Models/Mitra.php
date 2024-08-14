@@ -19,4 +19,8 @@ class Mitra extends Model
     {
         return $this->hasMany(Magang::class, 'id_mitra', 'id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id', 'id');
+    }
 }

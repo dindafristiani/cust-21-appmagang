@@ -37,78 +37,24 @@
         </div>
     @endif
     <div class="container-fluid">
-        <div class="card">
-            <div class="container">
-            <h1 class="text-center">Informasi Magang</h1>
-            <div class="magang-info">
-                <div class="table-responsive">
-                    <table class="table table-borderless">
-                        @forelse($magangs as $magang)
-                        <tbody>
-                            <tr>
-                                <th>Nama Siswa</th>
-                                <td>{{ $magang->murid->nama }}</td>
-                            </tr>
-                            <tr>
-                                <th>NIS</th>
-                                <td>{{ $magang->murid->nis }}</td>
-                            </tr>
-                            <tr>
-                                <th>Kelas</th>
-                                <td>{{ $magang->murid->kelas }}</td>
-                            </tr>
-                            <tr>
-                                <th>Jurusan</th>
-                                <td>{{ $magang->murid->jurusan }}</td>
-                            </tr>
-                            <tr>
-                                <th>Nama Mitra</th>
-                                <td>{{ $magang->mitra->nama }}</td>
-                            </tr>
-                            <tr>
-                                <th>Alamat Mitra</th>
-                                <td>{{ $magang->mitra->alamat }}</td>
-                            </tr>
-                            <tr>
-                                <th>PIC Mitra</th>
-                                <td>{{ $magang->mitra->pic }}</td>
-                            </tr>
-                            <tr>
-                                <th>No HP Mitra</th>
-                                <td>{{ $magang->mitra->nohp }}</td>
-                            </tr>
-                            <tr>
-                                <th>Periode</th>
-                                <td>{{ $magang->periode_awal }} - {{ $magang->periode_akhir }}</td>
-                            </tr>
-                            <tr>
-                                <th>Status</th>
-                                <td>{{ $magang->is_active ? 'Aktif' : 'Selesai' }}</td>
-                            </tr>
-                            <tr>
-                                <th>Keterangan</th>
-                                <td>{{ $magang->keterangan }}</td>
-                            </tr>
-                            <tr>
-                                <th>Nama Guru</th>
-                                <td>{{ $magang->mitra->guru ? $magang->mitra->guru->nama : '-' }}</td>
-                            </tr>
-                            <tr>
-                                <th>NIP Guru</th>
-                                <td>{{ $magang->mitra->guru ? $magang->mitra->guru->nip : '-' }}</td>
-                            </tr>
-                            <tr>
-                                <th>No HP Guru</th>
-                                <td>{{ $magang->mitra->guru ? $magang->mitra->guru->nohp : '-' }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    @empty
-                        <p>Tidak ada informasi magang yang tersedia.</p>
-                    @endforelse
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+
+                </div>
+                <div class="card-body">
+                    <h5><strong>{{ $magangs->mitra->nama }}</strong></h5>
+                    <p class="text-secondary">{{ $magangs->mitra->alamat }} - {{ $magangs->mitra->nohp }}</p>
+                    <p class="text-muted" style="margin: 0; padding: 0;">{{ \Carbon\Carbon::parse($magangs->periode_awal)->translatedFormat('j F Y') }} - {{ \Carbon\Carbon::parse($magangs->periode_akhir)->translatedFormat('j F Y') }}
+                    </p>
+                    <span class="text-success">
+                        <i class="fas fa-circle fa-xs"></i> Aktif
+                    </span>
+
+                    <p>Pembimbing Lapangan : {{ $magangs->mitra->pic }}</p>
                 </div>
             </div>
-        </div>    
+        </div>
     </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->

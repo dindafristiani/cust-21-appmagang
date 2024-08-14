@@ -30,4 +30,8 @@ class Magang extends Model
     {
         return $this->belongsTo(Murid::class, 'id_siswa','id');
     }
+    public function logbooks()
+    {
+        return $this->hasMany(Logbook::class, 'id_siswa', 'id_siswa');
+    }
 }
