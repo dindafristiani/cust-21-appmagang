@@ -119,8 +119,12 @@ class MitraController extends Controller
     {
         try {
             $mitra = mitra::findOrFail($id);
-            
-            // Delete record from the database
+            $user = $mitra->user;
+
+            if ($user) {
+                $user->delete();
+            }
+
             $mitra->delete();
 
             return redirect()->route('mitra.index')->with('success', 'Data Mitra Berhasil Dihapus!');

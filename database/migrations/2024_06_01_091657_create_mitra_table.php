@@ -19,7 +19,6 @@ class CreateMitraTable extends Migration
             $table->string('alamat');
             $table->string('pic');
             $table->string('nohp');
-            $table->string('id_guru');
             $table->string('jurusan');
             $table->timestamps();
         });

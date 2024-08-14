@@ -43,16 +43,22 @@
 
                 </div>
                 <div class="card-body">
-                    <h5><strong>{{ $magangs->mitra->nama }}</strong></h5>
-                    <p class="text-secondary">{{ $magangs->mitra->alamat }} - {{ $magangs->mitra->nohp }}</p>
-                    <p class="text-muted" style="margin: 0; padding: 0;">{{ \Carbon\Carbon::parse($magangs->periode_awal)->translatedFormat('j F Y') }} - {{ \Carbon\Carbon::parse($magangs->periode_akhir)->translatedFormat('j F Y') }}
-                    </p>
-                    <span class="text-success">
-                        <i class="fas fa-circle fa-xs"></i> Aktif
-                    </span>
-
-                    <p>Pembimbing Lapangan : {{ $magangs->mitra->pic }}</p>
+                    @if($magangs && $magangs->status == 0)
+                        <h5><strong>{{ $magangs->mitra->nama }}</strong></h5>
+                        <p class="text-secondary">{{ $magangs->mitra->alamat }} - {{ $magangs->mitra->nohp }}</p>
+                        <p class="text-muted" style="margin: 0; padding: 0;">
+                            {{ \Carbon\Carbon::parse($magangs->periode_awal)->translatedFormat('j F Y') }} - {{ \Carbon\Carbon::parse($magangs->periode_akhir)->translatedFormat('j F Y') }}
+                        </p>
+                        <span class="text-success">
+                            <i class="fas fa-circle fa-xs"></i> Aktif
+                        </span>
+                        <p>Pembimbing Lapangan : {{ $magangs->mitra->pic }}</p>
+                    @else
+                        <h5><strong>Data Magang Kamu Belum Tersedia</strong></h5>
+                        <p class="text-secondary">Silahkan cek secara berkala untuk mendapatkan informasi terbaru tentang status magang kamu.</p>
+                    @endif
                 </div>
+
             </div>
         </div>
     </div><!-- /.container-fluid -->

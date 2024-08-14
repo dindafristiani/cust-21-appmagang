@@ -159,16 +159,22 @@ class MuridController extends Controller
     public function destroy($id)
     {
         try {
-            $murid = Murid::findOrFail($id);
             
-            // Delete record from the database
+            $murid = Murid::findOrFail($id);
+            $user = $murid->user;
+
+            if ($user) {
+                $user->delete();
+            }
+
             $murid->delete();
 
-            return redirect()->route('murid.index')->with('success', 'Data Murid Berhasil Dihapus!');
+            return redirect()->route('murid.index')->with('success', 'Data Murid dan User Berhasil Dihapus!');
         } catch (Exception $e) {
             return redirect()->route('murid.index')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
+
 
     public function infoMagangSiswa(){
         $siswa_id = Auth::id();

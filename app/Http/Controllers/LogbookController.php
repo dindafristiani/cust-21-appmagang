@@ -20,10 +20,13 @@ class LogbookController extends Controller
         $magang = Magang::where('id_siswa', $idSiswa)->first();
         // Set locale Carbon ke Bahasa Indonesia
         Carbon::setLocale('id');
+        $logbookExists = false;
         // Cek apakah id_siswa dan id_magang sudah ada di logbook
-        $logbookExists = Logbook::where('id_siswa', $idSiswa)
-                                ->where('id_magang', $magang->id)
-                                ->exists();
+        if ($magang) {
+            $logbookExists = Logbook::where('id_siswa', $idSiswa)
+                                    ->where('id_magang', $magang->id)
+                                    ->exists();
+        }
 
         return view('backend.pages.logbook.index', compact('logbooks', 'logbookExists','magang'));
     }
